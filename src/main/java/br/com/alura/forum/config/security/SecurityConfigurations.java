@@ -48,16 +48,26 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.GET, "/topicos").permitAll()
 		.antMatchers(HttpMethod.GET, "/topicos/*").permitAll()
 		.antMatchers(HttpMethod.POST, "/auth").permitAll()
+		.antMatchers(HttpMethod.GET, "/actuator/**").permitAll() //quando em produção, não liberar como público!!! possui informações sobre a API
 		.anyRequest().authenticated()
 		.and().csrf().disable()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		.and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
+		.and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, usuarioRepository), 
+				UsernamePasswordAuthenticationFilter.class); //registra o filtro que recupera o token via cabeçalho
 	}
 	
 	
 	//Configuracoes de recursos estaticos(js, css, imagens, etc.)
+	//não vai interceptar as urls do swagger pedindo login, senha e token
+	//todas essas rotas são liberadas para acesso 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
+		web.ignoring().antMatchers(
+				"/**.html",
+				"/v2/api-docs",
+				"/webjars/**",
+				"/configuration/**",
+				"/swagger-resources/**");
 	}
 	
 }

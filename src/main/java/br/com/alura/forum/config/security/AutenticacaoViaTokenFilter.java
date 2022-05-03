@@ -19,14 +19,15 @@ public class AutenticacaoViaTokenFilter extends OncePerRequestFilter {
 	private TokenService tokenService;
 	private UsuarioRepository repository;
 
+	//injeção via construtor 
 	public AutenticacaoViaTokenFilter(TokenService tokenService, UsuarioRepository repository) {
 		this.tokenService = tokenService;
 		this.repository = repository;
 	}
 
 	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-			throws ServletException, IOException {
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, 
+			FilterChain filterChain)throws ServletException, IOException {
 		
 		String token = recuperarToken(request);
 		boolean valido = tokenService.isTokenValido(token);
@@ -40,7 +41,8 @@ public class AutenticacaoViaTokenFilter extends OncePerRequestFilter {
 	private void autenticarCliente(String token) {
 		Long idUsuario = tokenService.getIdUsuario(token);
 		Usuario usuario = repository.findById(idUsuario).get();
-		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
+		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+				usuario, null, usuario.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
 
@@ -50,7 +52,8 @@ public class AutenticacaoViaTokenFilter extends OncePerRequestFilter {
 			return null;
 		}
 		
-		return token.substring(7, token.length());
+		return token.substring(7, token.length()); //palavra Bearer = 6 caracteres + 1 do espaço = 7
+												   //vai devolver apenas o token sem o tipo 
 	}
 
 }
