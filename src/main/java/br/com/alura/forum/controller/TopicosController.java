@@ -102,6 +102,8 @@ public class TopicosController {
 		return ResponseEntity.notFound().build();
 	}
 	
+	//só entra nesse endpoint se tiver papel/perfil de "MODERADOR"
+	//conforme liberado na classe SecurityConfigurations
 	@DeleteMapping("/{id}")
 	@Transactional
 	@CacheEvict(value = "listaDeTopicos", allEntries = true)
