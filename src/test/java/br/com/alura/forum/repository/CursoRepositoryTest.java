@@ -1,6 +1,6 @@
 package br.com.alura.forum.repository;
 
-
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import br.com.alura.forum.modelo.Curso;
-import io.jsonwebtoken.lang.Assert;
+
+
 
 @RunWith(SpringRunner.class)
 @DataJpaTest                     //para teste de Repository, simplifica a escrita de testes
@@ -39,9 +40,9 @@ public class CursoRepositoryTest {
 		
 		Curso curso = repository.findByNome(nomeCurso);	
 		//Assert.assertNotNull(curso);
-		Assert.notNull(curso);       
+		Assert.assertNotNull(curso);       
 		//Assert.assertEquals(nomeCurso, curso.getNome());
-		Assert.hasText(nomeCurso, curso.getNome());		      //verifica se o nome desse é igual ao do banco
+		Assert.assertEquals(nomeCurso, curso.getNome());		      //verifica se o nome desse é igual ao do banco
 	}
 	
 	
@@ -50,7 +51,7 @@ public class CursoRepositoryTest {
 		String nomeCurso = "JPA";
 		Curso curso = repository.findByNome(nomeCurso);	
 		//Assert.assertNull(curso);
-		Assert.isNull(curso);       		     
+		Assert.assertNull(curso);       		     
 	}
 
 }

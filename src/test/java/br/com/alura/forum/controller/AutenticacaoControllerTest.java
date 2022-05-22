@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import ch.qos.logback.core.status.Status;
+
 
 @RunWith(SpringRunner.class)
 //@WebMvcTest          				//para teste da camada MCV -> Controller, RestController
@@ -30,7 +30,9 @@ public class AutenticacaoControllerTest {
 	public void deveriaDevolverBadRequestCasoDadosdeAutenticacaoEstejamIncorretos() throws Exception {
 		
 		URI uri = new URI("/auth");
-		String json = "{\"email\":\"invalido@email.com\",\"senha\":\"123456}\"";
+		String json = "{\"email\":\"invalido@email.com\",\"senha\":\"123456\"}";
+		
+		
 		
 		mockMvc
 		.perform(MockMvcRequestBuilders
@@ -57,6 +59,6 @@ public class AutenticacaoControllerTest {
 				.contentType(MediaType.APPLICATION_JSON));		 		
 	
 	}
-
+	
 
 }
