@@ -20,7 +20,7 @@ import br.com.alura.forum.controller.form.LoginForm;
 
 @RestController
 @RequestMapping("/auth")
-@Profile(value ={"prod", "test"})    //pode ser carregado vários profiles 
+//@Profile(value ={"prod", "test"})    //pode ser carregado vários profiles 
 public class AutenticacaoController {
 	
 	@Autowired
